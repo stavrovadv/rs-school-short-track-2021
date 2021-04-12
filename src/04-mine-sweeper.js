@@ -21,8 +21,36 @@
  *  [1, 1, 1]
  * ]
  */
-function minesweeper(/* matrix */) {
-  throw new Error('Not implemented');
+
+function takeValueOrZero(matrix, i, j) {
+  if (i < 0 || j < 0 || i >= matrix.length || j >= matrix[0].length) {
+    return 0;
+  }
+  return matrix[i][j] ? 1 : 0;
+}
+
+function countNeighbors(matrix, i, j) {
+  let res = 0;
+  res += takeValueOrZero(matrix, i - 1, j);
+  res += takeValueOrZero(matrix, i - 1, j - 1);
+  res += takeValueOrZero(matrix, i - 1, j + 1);
+  res += takeValueOrZero(matrix, i, j - 1);
+  res += takeValueOrZero(matrix, i, j + 1);
+  res += takeValueOrZero(matrix, i + 1, j - 1);
+  res += takeValueOrZero(matrix, i + 1, j);
+  res += takeValueOrZero(matrix, i + 1, j + 1);
+  return res;
+}
+
+function minesweeper(matrix) {
+  const res = [];
+  for (let i = 0; i < matrix.length; i++) {
+    res.push([]);
+    for (let j = 0; j < matrix[0].length; j++) {
+      res[i].push(countNeighbors(matrix, i, j));
+    }
+  }
+  return res;
 }
 
 module.exports = minesweeper;

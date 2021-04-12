@@ -10,18 +10,40 @@
  * queue.dequeue(); // returns the top element from queue and deletes it, returns 1
  *
  */
+const ListNode = require('../extensions/list-node');
 
 class Queue {
-  get size() {
-    throw new Error('Not implemented');
+  constructor() {
+    this.head = null;
+    this.last = null;
   }
 
-  enqueue(/* element */) {
-    throw new Error('Not implemented');
+  get size() {
+    let count = 0;
+    let first = this.head;
+    for (; first !== null; count++) {
+      first = first.next;
+    }
+    return count;
+  }
+
+  enqueue(element) {
+    if (this.last === null) {
+      this.last = new ListNode(element);
+      this.head = this.last;
+    } else {
+      this.last.next = new ListNode(element);
+      this.last = this.last.next;
+    }
   }
 
   dequeue() {
-    throw new Error('Not implemented');
+    if (this.head !== null) {
+      const res = this.head.value;
+      this.head = this.head.next;
+      return res;
+    }
+    return undefined;
   }
 }
 
